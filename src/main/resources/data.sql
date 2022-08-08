@@ -1,1 +1,1 @@
-INSERT INTO TB_CLIENTE (id, nome, cpf) VALUES (default, 'Carlos', 1222222)
+INSERT INTO TB_CLIENTE (ID, NOME, CPF) VALUES (default, "Carlos", 1222222);
