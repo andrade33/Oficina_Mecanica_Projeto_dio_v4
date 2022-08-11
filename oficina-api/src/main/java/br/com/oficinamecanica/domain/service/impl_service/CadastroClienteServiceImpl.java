@@ -1,0 +1,42 @@
+///////////////////////////////////////////////////////////////////
+package br.com.oficinamecanica.domain.service.impl_service;
+///////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import br.com.oficinamecanica.domain.exception.DomainException;
+import br.com.oficinamecanica.domain.models.Cliente;
+import br.com.oficinamecanica.domain.repository.ClienteRepository;
+import br.com.oficinamecanica.domain.service.ICadastroClienteService;
+///////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////
+@Service
+public class CadastroClienteServiceImpl implements ICadastroClienteService {
+	
+	///////////////////////////////////////////////////////////////////
+	@Autowired
+	private ClienteRepository clienteRepository;
+	///////////////////////////////////////////////////////////////////
+
+	///////////////////////////////////////////////////////////////////
+	public Cliente salvar(Cliente novoCliente) {
+		Cliente clienteExistente = clienteRepository.findByEmail(novoCliente.getEmail());
+		
+		if (clienteExistente != null && !clienteExistente.equals(novoCliente)) {
+			throw new DomainException("Já existe cliente registrado com esse e-mail. Tente inserir outro.");
+		}
+		
+		return clienteRepository.save(novoCliente);
+	}
+	///////////////////////////////////////////////////////////////////
+
+	///////////////////////////////////////////////////////////////////
+	public void remover(Long clienteId) {
+		clienteRepository.deleteById(clienteId);
+	}
+	///////////////////////////////////////////////////////////////////
+
+	
+}
